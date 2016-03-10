@@ -18,9 +18,8 @@ public class FloodParamsPage {
 	private final String USER_AGENT = "Mozilla/5.0";
 	private static int total = 0;
 	private String site1 = "http://felipealvescosta.com/pizza/cliente/cadastrarCliente.php";
-	private String site2 = "http://felipealvescosta.com/pizza/produto/cadastrarProduto.php";		
-	String sites[] = {site1,site2};	
-	String params[] = {"nome=#&telefone=#","nome=#"};
+	private String param1 = "nome=#&telefone=98#"; 
+
 	Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) throws Exception {
@@ -42,12 +41,20 @@ public class FloodParamsPage {
 		return USER_AGENT;
 	}
 	
-	public String[] getSitesTest(){
-		return sites;
+	public String getSiteTest(){
+		return site1;
 	}
 	
-	public String[] getParamsTest(){
-		return params;
+	public String getParamTest(){
+		return param1;
+	}
+	
+	public void setSitesTest(String site1){
+		this.site1 = site1;
+	}
+	
+	public void setParamsTest(String param1){
+		this.param1 = param1;
 	}
 	
 	private void switchChoice(boolean methodType){//post=true get=post=false
@@ -153,7 +160,7 @@ public class FloodParamsPage {
 		{
 			System.out.print("Numero de Threads: ");
 			int nThreads = scan.nextInt();			
-			return MultiplasThreads(methodType,sites[0], params[0], nThreads);
+			return MultiplasThreads(methodType,site1, param1, nThreads);
 		}
 		case 0:
 			return 0;
@@ -203,7 +210,7 @@ public class FloodParamsPage {
 		}
 		case 3:
 		
-			return MultiplasThreads(methodType,sites[0], params[0], 1);
+			return MultiplasThreads(methodType,site1, param1, 1);
 		
 		case 0:
 			return 0;
