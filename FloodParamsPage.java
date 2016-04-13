@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -35,6 +36,13 @@ public class FloodParamsPage {
 		http.switchChoice(post);
 		
 		http.scan.close();
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		this.scan.close();
+		super.finalize();		
 	}
 	
 	public String getUserAgent(){
@@ -218,8 +226,7 @@ public class FloodParamsPage {
 		return choice;
 	}
 	
-	private int menuMultiplasThreadsSites(boolean methodType){
-		//Scanner scan = new Scanner(System.in);
+	private int menuMultiplasThreadsSites(boolean methodType){//GAME SAVED case 4:
 		int choice = 0;
 		boolean uma_vez_do = false;
 		do{			
@@ -228,7 +235,7 @@ public class FloodParamsPage {
 				System.out.println("        1° parametro com valor random");
 				System.out.println("        2° escolher valor para o parametro");
 				System.out.println("        3° variavel predefinida");
-				System.out.println("        4° sites e parametros de arquivo padrão(site:param\\n)");
+				System.out.println("        4° sites e parametros de arquivo padrão(site param\\n)");
 				System.out.println("        0 voltar");
 				uma_vez_do = true;
 			}
@@ -279,7 +286,7 @@ public class FloodParamsPage {
 		case 2:
 		{
 			scan.nextLine();
-			System.out.println("Digite \"0\" no final de cada array");//indicar saida igual no C(ANSI)
+			System.out.println("Digite \"0\" no final de cada array");//Indicar saida se for zero termina e passa
 			System.out.println("Digite os sites (ex:https://google.com/): ");
 			int i = 0;
 			while( !(site = scan.nextLine()).equals("0") ){
@@ -311,6 +318,7 @@ public class FloodParamsPage {
 		} 
 		case 4:
 		{
+			ArrayList<String> sitesList = new ArrayList<String>(), paramsList = new ArrayList<>();
 			scan.nextLine();
 			System.out.print("Digite o diretorio e nome do arquivo (ex:/home/ghost/arq.txt)");
 			String arqv = scan.nextLine();
@@ -323,25 +331,27 @@ public class FloodParamsPage {
 				int i = 0;
 				while(buffer.ready() && i < 100){
 					String str = buffer.readLine();
-					int indice = str.indexOf("|");
-					sites[i] = str.substring(0, indice);
-					params[i] = str.substring(indice+1,str.length());							
+					int indice = str.indexOf(" ");
+					sitesList.add(str.substring(0, indice));
+					paramsList.add(str.substring(indice+1,str.length()));							
 					i++;
 				}
+				
+				System.out.println("\n");
 			}catch(FileNotFoundException e){
 				System.out.println("Arquivo não encontrado\n\n");
 				System.out.println("reiniciando...\n\n");
-				System.out.println("------- Flood Params Page v1.0 -------");				
+				System.out.println("------- Flood paramsList Page v1.0 -------");				
 			}catch(IOException e){
 				e.printStackTrace();
 			}finally{
 				
 			}
-			//System.out.println(sites[0]);
+			//System.out.println(sitesList[0]);
 			
 			System.out.println("Numero de Threads: ");
 			int nThreads = scan.nextInt();
-			return MultiplasThreadsSites(methodType, sites, params, nThreads);
+			return MultiplasThreadsSites(methodType, sitesList.toArray(new String[sitesList.size()]), paramsList.toArray(new String[paramsList.size()]), nThreads);
 		}
 		case 0:
 			return 0;
