@@ -18,7 +18,7 @@ public class FloodParamsPage {
 
 	private final String USER_AGENT = "Mozilla/5.0";
 	private static int total = 0;
-	private String site1 = "http://felipealvescosta.com/pizza/cliente/cadastrarCliente.php";
+	private String site1 = "http://teste.com/"; // site para teste
 	private String param1 = "nome=#&telefone=98#"; 
 
 	Scanner scan = new Scanner(System.in);
